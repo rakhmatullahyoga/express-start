@@ -46,4 +46,4 @@
 
 ### Who do I talk to? ###
 
-[Rakhmatullah Yoga Sutrisna](https://bitbucket.org/rakhmatullahyoga/) (c) 2017
+&copy; [Rakhmatullah Yoga Sutrisna](https://bitbucket.org/rakhmatullahyoga/) 2017
