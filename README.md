@@ -12,7 +12,7 @@
 
 * Clone this repository:
 
-    `git clone https://bitbucket.org/zeventix/backend-api.git`
+    `git clone https://github.com/rakhmatullahyoga/ExpRest-MVC.git`
     
 * Install project dependencies:
     
@@ -46,4 +46,4 @@
 
 ### Who do I talk to? ###
 
-&copy; [Rakhmatullah Yoga Sutrisna](https://bitbucket.org/rakhmatullahyoga/) 2017
+&copy; [Rakhmatullah Yoga Sutrisna](https://github.com/rakhmatullahyoga/) 2017
