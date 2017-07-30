@@ -18,8 +18,8 @@ module.exports = {
         MODELS_PATH:                __dirname+'/../../database/models',
         ROUTERS_LOADER:             __dirname+'/../../system/router',
         ROUTERS_PATH:               __dirname+'/../routers',
-        SERVICES_LOADER:             __dirname+'/../../system/service',
-        SERVICES_PATH:               __dirname+'/../services'
+        SERVICES_LOADER:            __dirname+'/../../system/service',
+        SERVICES_PATH:              __dirname+'/../services'
     },
     // Application's constant variables
     VARIABLE: {}
