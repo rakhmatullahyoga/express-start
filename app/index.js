@@ -9,13 +9,17 @@ require('dotenv').config();
 console.log("Starting app...");
 
 // LOAD APPLICATION'S CONSTANTS
-let CONSTANTS = require(__dirname+'/application/configs/constants');
+console.time('Loading app constants');
+let CONSTANTS = require(__dirname+'/configs/constants');
+console.timeEnd('Loading app constants');
 
 // DEFINE ALL MODULES
+console.time('Loading app modules');
 let MODULES = require(CONSTANTS.PATH.APPLICATION_MODULES);
+console.timeEnd('Loading app modules');
 
 // INITIALIZE TOOLS AND LIBRARIES
 let TOOLS = require(CONSTANTS.PATH.APPLICATION_TOOLS)(MODULES, CONSTANTS);
 
-// STARTING APPLICATION SERVER
-require(CONSTANTS.PATH.APPLICATION_SERVER)(TOOLS);
+// STARTING EXPRESS SERVER
+require(CONSTANTS.PATH.EXPRESS_SERVER)(TOOLS);

@@ -7,7 +7,7 @@
 module.exports = function (TOOLS, MODULES) {
     return {
         hello: function (cb) {
-            cb(null, "Hello world!");
+            cb(null, {message: "Hello world!"});
         }
     };
 };

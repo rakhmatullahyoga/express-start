@@ -5,6 +5,7 @@
 'use strict';
 
 module.exports = function (MODULES, CONSTANTS) {
+    console.time('Loading app tools, models, services, and interfaces');
     // Define parameter for initialization
     let TOOLS = {};
 
@@ -36,14 +37,18 @@ module.exports = function (MODULES, CONSTANTS) {
     TOOLS.MODELS = require(CONSTANTS.PATH.MODELS_LOADER)(MODULES);
 
     // Initialize services
-    TOOLS.SERVICES = require(CONSTANTS.PATH.SERVICES_LOADER)(TOOLS, MODULES, CONSTANTS);
+    TOOLS.SERVICES = require(CONSTANTS.PATH.CLASS_LOADER)(TOOLS, MODULES, CONSTANTS.PATH.SERVICES_PATH);
 
-    // Initialize controllers
-    TOOLS.CONTROLLERS = require(CONSTANTS.PATH.CONTROLLERS_LOADER)(TOOLS, MODULES, CONSTANTS);
+    // Initialize interfaces
+    TOOLS.CONTROLLERS = require(CONSTANTS.PATH.CLASS_LOADER)(TOOLS, MODULES, CONSTANTS.PATH.CONTROLLERS_PATH);
+
+    // Initialize interfaces
+    TOOLS.INTERFACES = {};
 
     // Packaging constants and modules
     TOOLS.CONSTANTS = CONSTANTS;
     TOOLS.MODULES = MODULES;
 
+    console.timeEnd('Loading app tools, models, services, and interfaces');
     return TOOLS;
 };

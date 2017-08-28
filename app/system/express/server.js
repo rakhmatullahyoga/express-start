@@ -5,6 +5,7 @@
 'use strict';
 
 module.exports = function (TOOLS) {
+    console.time('Loading express engine');
     // Initialize Express engine
     let APP = TOOLS.MODULES.EXPRESS();
     APP.use(TOOLS.MODULES.BODY_PARSER.urlencoded({ extended: false }));
@@ -13,6 +14,9 @@ module.exports = function (TOOLS) {
     APP.use(TOOLS.MODULES.EXPRESS_LOGGER.create(TOOLS.LOG));
     APP.use(TOOLS.MODULES.METHOD_OVERRIDE());
     APP.use(TOOLS.MULTER.single());
+
+    // Initialize express interface
+    TOOLS.INTERFACES.EXPRESS = require(TOOLS.CONSTANTS.PATH.CLASS_LOADER)(TOOLS, TOOLS.MODULES, TOOLS.CONSTANTS.PATH.EXPRESS_INTERFACES_PATH);
 
     // Initialize routers
     require(TOOLS.CONSTANTS.PATH.ROUTERS_LOADER)(TOOLS, APP);
@@ -24,6 +28,7 @@ module.exports = function (TOOLS) {
 
     // Starting the application server
     let SERVER = APP.listen(process.env.APP_PORT, function () {
+        console.timeEnd('Loading express engine');
         TOOLS.LOG.info('Listening on port: ' + SERVER.address().port);
     });
 };

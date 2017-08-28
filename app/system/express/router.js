@@ -5,20 +5,39 @@
 'use strict';
 
 module.exports = function (TOOLS, APP) {
+    console.time('Loading express routers');
     let async 		= TOOLS.MODULES.ASYNC;
-    let controllers = TOOLS.CONTROLLERS;
+    let interfaces  = TOOLS.INTERFACES.EXPRESS;
     let fs 			= TOOLS.MODULES.FS;
     let http        = TOOLS.MODULES.HTTP;
+    let path        = TOOLS.MODULES.PATH;
     let log 	    = TOOLS.LOG;
     let _ 			= TOOLS.MODULES.UNDERSCORE;
 
-    // Initialize routes generator
-    let loader = {
+    // Initialize endpoints generator
+    let endpointLoader = {
+        recursiveGenerator: function generate(basePath, subPath) {
+            let currentPath = basePath + (subPath ? '/' + subPath : '');
+
+            fs.readdirSync(currentPath).forEach(function (file) {
+                if(fs.statSync(currentPath + '/' + file).isDirectory()) {
+                    generate(basePath, (subPath ? subPath + '/' : '') + file);
+                } else {
+                    if((file.indexOf('.') !== 0) && (file.slice(-3) === '.js')) {
+                        let apiConfig = require(currentPath + '/' + file);
+                        endpointLoader.generateEndpoint(apiConfig, (subPath ? subPath + '/' : '') + file.replace('.js', ''));
+                    } else {
+                        log.warn(`file '${currentPath +'/'+ file}' is not supported for express router`);
+                    }
+                }
+            })
+        },
+
         generateEndpoint: function (routes, routeParent) {
             let self = this;
             routes.forEach(function (routeConfig) {
                 let urlPath, lastEndpoint;
-                let method = routeConfig.method.toLowerCase();
+                let httpMethod = routeConfig.method.toLowerCase();
 
                 routeParent 	= routeParent.toLowerCase();
                 lastEndpoint  	= routeConfig.endpoint;
@@ -27,14 +46,14 @@ module.exports = function (TOOLS, APP) {
                 } else {
                     urlPath = '/' + routeParent + lastEndpoint;
                 }
-                self.endpointHandler(method, urlPath, routeConfig);
+                self.endpointHandler(httpMethod, urlPath, routeConfig);
             });
         },
 
-        endpointHandler: function (method, urlPath, routeConfig) {
+        endpointHandler: function (httpMethod, urlPath, routeConfig) {
             let self = this;
             if (routeConfig && routeConfig.controllers && routeConfig.controllers.length > 0) {
-                APP[method](urlPath, function(req, res){
+                APP[httpMethod](urlPath, function(req, res) {
                     let controllerMethods = [];
                     routeConfig.controllers.forEach(function(controllerStr){
                         controllerMethods.push(function (previousData, cb){
@@ -72,19 +91,13 @@ module.exports = function (TOOLS, APP) {
             try {
                 let controllerFileName = controllerStr.split('.')[0];
                 let controllerFuncName = controllerStr.split('.')[1];
-                return controllers[controllerFileName][controllerFuncName];
+                return interfaces[controllerFileName][controllerFuncName];
             } catch (e) {
                 console.dir(e);
             }
         }
     };
 
-    fs.readdirSync(TOOLS.CONSTANTS.PATH.ROUTERS_PATH).filter(function(file) {
-        let tempPath = TOOLS.CONSTANTS.PATH.ROUTERS_PATH + '/' + file;
-        return (file.indexOf('.') !== 0) && (!fs.statSync(tempPath).isDirectory()) && (file.slice(-3) === '.js');
-    }).forEach(function(file) {
-        let controllerPath = TOOLS.CONSTANTS.PATH.ROUTERS_PATH + '/' + file;
-        let apiConfig = require(controllerPath);
-        loader.generateEndpoint(apiConfig, file.replace('.js', ''));
-    });
+    endpointLoader.recursiveGenerator(TOOLS.CONSTANTS.PATH.ROUTERS_PATH);
+    console.timeEnd('Loading express routers');
 };

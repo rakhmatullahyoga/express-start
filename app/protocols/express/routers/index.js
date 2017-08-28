@@ -9,7 +9,7 @@ module.exports = [
         method : 'get',
         endpoint : '/',
         controllers : [
-            'WelcomeController.welcome'
+            'WelcomeInterface.welcome'
         ]
     }
 ];

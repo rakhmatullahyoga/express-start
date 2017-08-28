@@ -1,10 +1,10 @@
-# ExpRest-MVC #
+# Node-Service #
 
 ### What is this? ###
 
-* Custom MVC framework for Node.js, using Express.js
+* Custom MVC boilerplate for Node.js, using Express.js
 
-* Application version: 1.0.0
+* Application version: 2.0.0
 
 ### How do I get set up? ###
 
@@ -12,7 +12,9 @@
 
 * Clone this repository:
 
-    `git clone https://github.com/rakhmatullahyoga/ExpRest-MVC.git`
+    `git clone https://github.com/rakhmatullahyoga/Node-Service.git`
+    
+* Change root directory to `/app` before running all commands
     
 * Install project dependencies:
     
@@ -29,8 +31,11 @@
     
 * Database migration (using [Sequelize](http://docs.sequelizejs.com)):
 
+    - create model (and migration): `node node_modules/.bin/sequelize model:create --name <model_name> --attributes <attributes>`
+    - create migration: `node node_modules/.bin/sequelize migration:create`
     - run: `node node_modules/.bin/sequelize db:migrate`
     - undo: `node node_modules/.bin/sequelize db:migrate:undo`
+    - help: `node node_modules/.bin/sequelize help`
 
 * How to run tests: (TBD)
 
