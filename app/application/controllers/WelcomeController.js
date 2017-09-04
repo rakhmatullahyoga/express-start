@@ -7,8 +7,8 @@
 module.exports = function (TOOLS, MODULES) {
     let welcomeService = TOOLS.SERVICES.WelcomeService;
     return {
-        welcome: function(param, next) {
-            welcomeService.hello(next);
+        welcome: function(param, callback) {
+            welcomeService.hello({message: "Hello world!"}, callback);
         }
     };
 };

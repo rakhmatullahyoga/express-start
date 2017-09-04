@@ -6,8 +6,8 @@
 
 module.exports = function (TOOLS, MODULES) {
     return {
-        hello: function (cb) {
-            cb(null, {message: "Hello world!"});
+        hello: function (params, callback) {
+            callback(null, {message: "Hello world!"});
         }
     };
 };
