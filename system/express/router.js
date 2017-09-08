@@ -66,11 +66,22 @@ module.exports = function (TOOLS, APP) {
                     });
                     async.waterfall(controllerMethods, function (err, data){
                         if (err) {
-                            let code = err.code ? (_.isNumber(err.code) ? err.code : 500) : 500;
-                            return res.status(code).json({ status: http.STATUS_CODES[code], data: _.omit(err, 'code') });
+                            let code = 500;
+                            log.error(err);
+                            return res.status(code).json({
+                                code: code,
+                                status: http.STATUS_CODES[code],
+                                message: "Internal server error.",
+                                data: {}
+                            });
                         } else {
                             let code = data.code ? (_.isNumber(data.code) ? data.code : 200) : 200;
-                            res.status(code).json({ status: http.STATUS_CODES[code], data: _.omit(data, 'code') });
+                            res.status(code).json({
+                                code: code,
+                                status: http.STATUS_CODES[code],
+                                message: data.message ? data.message : "",
+                                data: _.omit(data, ['code', 'message'])
+                            });
                         }
                     });
                 });
