@@ -61,9 +61,6 @@ module.exports = function (MODULES, CONSTANTS, callback) {
             // Initialize interfaces
             TOOLS.INTERFACES = {};
 
-            // Packaging constants and modules
-            TOOLS.CONSTANTS = CONSTANTS;
-            TOOLS.MODULES = MODULES;
             console.timeEnd('Loading services, controllers and interfaces');
             callback(null, TOOLS);
         }

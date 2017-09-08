@@ -4,15 +4,15 @@
 
 'use strict';
 
-module.exports = function (TOOLS, APP) {
+module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
     console.time('Loading express routers');
-    let async 		= TOOLS.MODULES.ASYNC;
+    let async 		= MODULES.ASYNC;
     let interfaces  = TOOLS.INTERFACES.EXPRESS;
-    let fs 			= TOOLS.MODULES.FS;
-    let http        = TOOLS.MODULES.HTTP;
-    let path        = TOOLS.MODULES.PATH;
+    let fs 			= MODULES.FS;
+    let http        = MODULES.HTTP;
+    let path        = MODULES.PATH;
     let log 	    = TOOLS.LOG;
-    let _ 			= TOOLS.MODULES.UNDERSCORE;
+    let _ 			= MODULES.UNDERSCORE;
 
     // Initialize endpoints generator
     let endpointLoader = {
@@ -109,6 +109,6 @@ module.exports = function (TOOLS, APP) {
         }
     };
 
-    endpointLoader.recursiveGenerator(TOOLS.CONSTANTS.PATH.ROUTERS_PATH);
+    endpointLoader.recursiveGenerator(CONSTANTS.PATH.ROUTERS_PATH);
     console.timeEnd('Loading express routers');
 };

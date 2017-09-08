@@ -31,6 +31,6 @@ MODULES.ASYNC.waterfall([
         throw err;
     } else {
         // STARTING EXPRESS SERVER
-        require(CONSTANTS.PATH.EXPRESS_SERVER)(result, MODULES);
+        require(CONSTANTS.PATH.EXPRESS_SERVER)(result, MODULES, CONSTANTS);
     }
 });

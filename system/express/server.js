@@ -4,7 +4,7 @@
 
 'use strict';
 
-module.exports = function (TOOLS, MODULES) {
+module.exports = function (TOOLS, MODULES, CONSTANTS) {
     console.time('Loading express engine');
     // Initialize Express engine
     let APP = MODULES.EXPRESS();
@@ -16,10 +16,10 @@ module.exports = function (TOOLS, MODULES) {
     APP.use(TOOLS.MULTER.single());
 
     // Initialize express interface
-    TOOLS.INTERFACES.EXPRESS = require(TOOLS.CONSTANTS.PATH.CLASS_LOADER)(TOOLS, MODULES, TOOLS.CONSTANTS.PATH.EXPRESS_INTERFACES_PATH);
+    TOOLS.INTERFACES.EXPRESS = require(CONSTANTS.PATH.CLASS_LOADER)(TOOLS, MODULES, CONSTANTS.PATH.EXPRESS_INTERFACES_PATH);
 
     // Initialize routers
-    require(TOOLS.CONSTANTS.PATH.ROUTERS_LOADER)(TOOLS, APP);
+    require(CONSTANTS.PATH.ROUTERS_LOADER)(TOOLS, APP, CONSTANTS, MODULES);
 
     // Not found route handler
     APP.use(function(req, res) {
