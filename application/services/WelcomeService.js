@@ -4,10 +4,15 @@
 
 'use strict';
 
-module.exports = function (TOOLS, MODULES) {
+module.exports = function (TOOLS, MODULES, CONSTANTS) {
     return {
+        /**
+         * Get return data for testing
+         * @param params Any JSON Object
+         * @param callback Callback function
+         */
         hello: function (params, callback) {
-            callback(null, {message: "Hello world!"});
+            callback(null, params);
         }
     };
 };
