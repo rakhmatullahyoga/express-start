@@ -6,6 +6,7 @@
 
 module.exports = function (TOOLS, MODULES, CONSTANTS) {
     console.time('Loading express engine');
+
     // Initialize Express engine
     let APP = MODULES.EXPRESS();
     APP.use(MODULES.BODY_PARSER.urlencoded({ extended: false }));
@@ -13,7 +14,8 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
     APP.use(MODULES.CORS());
     APP.use(MODULES.EXPRESS_LOGGER.create(TOOLS.LOG));
     APP.use(MODULES.METHOD_OVERRIDE());
-    APP.use(TOOLS.MULTER.single());
+    // Make directory '/public' as a static file content
+    APP.use('/public', MODULES.EXPRESS.static(CONSTANTS.PATH.PUBLIC_FILE_PATH));
 
     // Initialize express interface
     TOOLS.INTERFACES.EXPRESS = require(CONSTANTS.PATH.CLASS_LOADER)(TOOLS, MODULES, CONSTANTS, CONSTANTS.PATH.EXPRESS_INTERFACES_PATH);

@@ -8,6 +8,7 @@ module.exports = {
     ASYNC:              require('async'),
     BODY_PARSER:        require('body-parser'),
     CORS:               require('cors'),
+    CRYPTO:             require('crypto'),
     EXPRESS:            require('express'),
     EXPRESS_LOGGER:     require('express-request-logger'),
     FS:                 require('fs'),

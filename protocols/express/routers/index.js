@@ -8,7 +8,9 @@ module.exports = [
     {
         method : 'get',
         endpoint : '/',
-        controllers : [
+        fileField: null,
+        fileObjArray: 'none',
+        handlers : [
             'WelcomeInterface.welcome'
         ]
     }

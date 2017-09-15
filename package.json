@@ -4,7 +4,8 @@
   "description": "Custom MVC framework for building REST API application using Express.js",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "node node_modules/mocha/bin/mocha tests --recursive --watch"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,6 @@
     "async": "^2.5.0",
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",
-    "dotenv": "^4.0.0",
     "express": "latest",
     "express-request-logger": "0.0.3",
     "method-override": "^2.3.9",
@@ -34,5 +34,9 @@
     "sequelize-cli": "^2.7.0",
     "underscore": "^1.8.3",
     "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0",
+    "mocha": "^3.5.2"
   }
 }

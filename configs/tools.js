@@ -32,7 +32,15 @@ module.exports = function (MODULES, CONSTANTS, callback) {
         TOOLS.LOG = new (MODULES.WINSTON.Logger)(logOpts);
 
         // Initialize multipart/form-data handler
-        TOOLS.MULTER = MODULES.MULTER();
+        let storage = MODULES.MULTER.diskStorage({
+            destination: './public/',
+            filename: function (req, file, cb) {
+                MODULES.CRYPTO.pseudoRandomBytes(16, function (err, raw) {
+                    cb(err, err ? undefined : raw.toString('hex') + MODULES.PATH.extname(file.originalname));
+                })
+            }
+        });
+        TOOLS.MULTER = MODULES.MULTER({storage: storage});
 
         // Initialize models (Sequelize)
         TOOLS.MODELS = require(CONSTANTS.PATH.MODELS_LOADER)(MODULES);

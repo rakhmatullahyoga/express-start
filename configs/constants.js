@@ -16,6 +16,7 @@ module.exports = {
         LOG_DEFAULT_PATH:           __dirname+'/../logs/logs.log',
         LOG_EXCEPTIONS_PATH:        __dirname+'/../logs/exceptions.log',
         MODELS_LOADER:              __dirname+'/../database/sequelize/models/index',
+        PUBLIC_FILE_PATH:           'public',
         REDIS_CLIENT:               __dirname+'/../database/redis/index',
         ROUTERS_LOADER:             __dirname+'/../system/express/router',
         ROUTERS_PATH:               __dirname+'/../protocols/express/routers',

@@ -7,11 +7,12 @@
 module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
     console.time('Loading express routers');
     let async 		= MODULES.ASYNC;
-    let interfaces  = TOOLS.INTERFACES.EXPRESS;
     let fs 			= MODULES.FS;
     let http        = MODULES.HTTP;
-    let path        = MODULES.PATH;
+    let interfaces  = TOOLS.INTERFACES.EXPRESS;
     let log 	    = TOOLS.LOG;
+    let multer      = TOOLS.MULTER;
+    let path        = MODULES.PATH;
     let _ 			= MODULES.UNDERSCORE;
 
     // Initialize endpoints generator
@@ -71,11 +72,12 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
         endpointHandler: function (httpMethod, urlPath, routeConfig) {
             let self = this;
             // check if there exist one or more controller/handler for an endpoint
-            if (routeConfig && routeConfig.controllers && routeConfig.controllers.length > 0) {
-                APP[httpMethod](urlPath, function(req, res) {
+            if (routeConfig && routeConfig.handlers && routeConfig.handlers.length > 0) {
+                let fileHandler = routeConfig.fileField? multer[routeConfig.fileObjArray](routeConfig.fileField) : multer.none();
+                APP[httpMethod](urlPath, fileHandler, function(req, res) {
                     let controllerMethods = [];
                     // define multiple controller/handler for an endpoint
-                    routeConfig.controllers.forEach(function(controllerStr){
+                    routeConfig.handlers.forEach(function(controllerStr){
                         controllerMethods.push(function (previousData, callback) {
                             // handle first function for async.waterfall, where callback is the first argument
                             if (!callback) {
