@@ -19,7 +19,7 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
          */
         welcome: function(previousData, req, res, next) {
             welcomeController.welcome(null, function (err, result) {
-                next(err, {message: result.message, welcomeData: result});
+                next(err, result);
             });
         }
     };

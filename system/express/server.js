@@ -32,6 +32,9 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
     let SERVER = APP.listen(process.env.APP_PORT, function () {
         console.timeEnd('Loading express engine');
         console.timeEnd('Total application preparation time');
-        TOOLS.LOG.info('Listening on port: ' + SERVER.address().port);
+        console.info('Listening on port: ' + SERVER.address().port);
     });
+
+    // Return APP for testing purpose
+    return SERVER;
 };

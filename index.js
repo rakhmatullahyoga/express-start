@@ -4,11 +4,16 @@
 
 'use strict';
 
+// Define express app variable, for testing purpose
+let app;
+
 console.time('Total application preparation time');
 
-require('dotenv').config();
+if(process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
-console.log("Starting app...");
+console.info("Starting app...");
 
 // LOAD APPLICATION'S CONSTANTS
 console.time('Loading app constants');
@@ -30,7 +35,7 @@ function initiateAppServers(err, tools) {
     if(err) {
         throw err;
     } else {
-        require(CONSTANTS.PATH.EXPRESS_SERVER)(tools, MODULES, CONSTANTS);
+        module.exports = require(CONSTANTS.PATH.EXPRESS_SERVER)(tools, MODULES, CONSTANTS);
     }
 }
 

@@ -11,8 +11,8 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
          * @param params Any JSON Object
          * @param callback Callback function
          */
-        hello: function (params, callback) {
-            callback(null, params);
+        welcome: function (params, callback) {
+            callback(null, {message: "Welcome!"});
         }
     };
 };
