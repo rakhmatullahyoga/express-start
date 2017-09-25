@@ -14,8 +14,6 @@
 
     `git clone https://github.com/rakhmatullahyoga/Node-Service.git`
     
-* Change root directory to `/app` before running all commands
-    
 * Install project dependencies:
     
     - Install all dependencies defined in package.json:
@@ -56,7 +54,10 @@
 
 * Writing code:
 
-    Please fork this repository first for starting a contribution.
+    Please fork this repository first for starting a contribution. This project use ESLint as Javascript lint library.
+    
+    - To run ESlint, type `node node_modules/.bin/eslint .`
+    - Fixing code errors, just type `node node_modules/.bin/eslint . --fix`
 
 ### Who do I talk to? ###
 

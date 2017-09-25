@@ -2,8 +2,6 @@
  * Created by rakhmatullahyoga on 22/09/17.
  */
 
-const chai = require('chai');
-let should = chai.should();
 let Sequelize = require('sequelize');
 let mongoose = require('mongoose');
 let redis = require('redis');
@@ -15,9 +13,9 @@ describe('Database connectivity', function () {
 
     describe('Sequelize ORM', function () {
         it('should connect to sequelize and database server', function (done) {
-            let sequelize = new Sequelize(process.env.DB_CONNECTION + '://' + process.env.DB_USERNAME + ':'
-                + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + ':' + process.env.DB_PORT
-                + '/' + process.env.DB_DATABASE);
+            let sequelize = new Sequelize(process.env.DB_CONNECTION + '://' + process.env.DB_USERNAME + ':' +
+                process.env.DB_PASSWORD + '@' + process.env.DB_HOST + ':' + process.env.DB_PORT +
+                '/' + process.env.DB_DATABASE);
             sequelize.authenticate().then(function () {
                 done();
             }).catch(function (err) {
@@ -28,13 +26,13 @@ describe('Database connectivity', function () {
 
     describe('Mongoose schema', function () {
         it('should connect to mongoose and mongodb server', function (done) {
-            if(process.env.MONGO_USER && process.env.MONGO_PASS) {
-                mongoose.connect('mongodb://' + process.env.MONGO_USER + ':'
-                    + process.env.MONGO_PASS + '@' + process.env.MONGO_HOST + ':' + process.env.MONGO_PORT
-                    + '/' + process.env.MONGO_DATABASE, {useMongoClient: true}, done);
+            if (process.env.MONGO_USER && process.env.MONGO_PASS) {
+                mongoose.connect('mongodb://' + process.env.MONGO_USER + ':' +
+                    process.env.MONGO_PASS + '@' + process.env.MONGO_HOST + ':' + process.env.MONGO_PORT +
+                    '/' + process.env.MONGO_DATABASE, {useMongoClient: true}, done);
             } else {
-                mongoose.connect('mongodb://' + process.env.MONGO_HOST + ':' + process.env.MONGO_PORT
-                    + '/' + process.env.MONGO_DATABASE, {useMongoClient: true}, done);
+                mongoose.connect('mongodb://' + process.env.MONGO_HOST + ':' + process.env.MONGO_PORT +
+                    '/' + process.env.MONGO_DATABASE, {useMongoClient: true}, done);
             }
         });
     });

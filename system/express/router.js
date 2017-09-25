@@ -6,14 +6,13 @@
 
 module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
     console.time('Loading express routers');
-    let async 		= MODULES.ASYNC;
-    let fs 			= MODULES.FS;
-    let http        = MODULES.HTTP;
-    let interfaces  = TOOLS.INTERFACES.EXPRESS;
-    let log 	    = TOOLS.LOG;
-    let multer      = TOOLS.MULTER;
-    let path        = MODULES.PATH;
-    let _ 			= MODULES.UNDERSCORE;
+    let async = MODULES.ASYNC;
+    let fs = MODULES.FS;
+    let http = MODULES.HTTP;
+    let interfaces = TOOLS.INTERFACES.EXPRESS;
+    let log = TOOLS.LOG;
+    let multer = TOOLS.MULTER;
+    let _ = MODULES.UNDERSCORE;
 
     // Initialize endpoints generator
     let endpointLoader = {
@@ -23,22 +22,22 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
          * @param basePath Path of endpoints
          * @param subPath Subdirectory of base path
          */
-        recursiveGenerator: function generate(basePath, subPath) {
+        recursiveGenerator: function generate (basePath, subPath) {
             let currentPath = basePath + (subPath ? '/' + subPath : '');
             fs.readdirSync(currentPath).forEach(function (file) {
-                if(fs.statSync(currentPath + '/' + file).isDirectory()) {
+                if (fs.statSync(currentPath + '/' + file).isDirectory()) {
                     // recursion invocation
                     generate(basePath, (subPath ? subPath + '/' : '') + file);
                 } else {
                     // recursion base
-                    if((file.indexOf('.') !== 0) && (file.slice(-3) === '.js')) {
+                    if ((file.indexOf('.') !== 0) && (file.slice(-3) === '.js')) {
                         let apiConfig = require(currentPath + '/' + file);
                         endpointLoader.generateEndpoint(apiConfig, (subPath ? subPath + '/' : '') + file.replace('.js', ''));
                     } else { // invalid endpoint file type
-                        log.warn(`file '${currentPath +'/'+ file}' is not supported for express router`);
+                        log.warn(`file '${currentPath + '/' + file}' is not supported for express router`);
                     }
                 }
-            })
+            });
         },
 
         /**
@@ -52,8 +51,8 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
                 let urlPath, lastEndpoint;
                 let httpMethod = routeConfig.method.toLowerCase();
 
-                routeParent 	= routeParent.toLowerCase();
-                lastEndpoint  	= routeConfig.endpoint;
+                routeParent = routeParent.toLowerCase();
+                lastEndpoint = routeConfig.endpoint;
                 if (routeParent === 'index') {
                     urlPath = lastEndpoint;
                 } else {
@@ -73,11 +72,11 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
             let self = this;
             // check if there exist one or more controller/handler for an endpoint
             if (routeConfig && routeConfig.handlers && routeConfig.handlers.length > 0) {
-                let fileHandler = routeConfig.fileField? multer[routeConfig.fileObjArray](routeConfig.fileField) : multer.none();
-                APP[httpMethod](urlPath, fileHandler, function(req, res) {
+                let fileHandler = routeConfig.fileField ? multer[routeConfig.fileObjArray](routeConfig.fileField) : multer.none();
+                APP[httpMethod](urlPath, fileHandler, function (req, res) {
                     let controllerMethods = [];
                     // define multiple controller/handler for an endpoint
-                    routeConfig.handlers.forEach(function(controllerStr){
+                    routeConfig.handlers.forEach(function (controllerStr) {
                         controllerMethods.push(function (previousData, callback) {
                             // handle first function for async.waterfall, where callback is the first argument
                             if (!callback) {
@@ -96,7 +95,7 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
                             return res.status(code).json({
                                 code: code,
                                 status: http.STATUS_CODES[code],
-                                message: "Internal server error.",
+                                message: 'Internal server error.',
                                 data: {}
                             });
                         } else {
@@ -104,14 +103,14 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
                             res.status(code).json({
                                 code: code,
                                 status: http.STATUS_CODES[code],
-                                message: data.message ? data.message : "",
+                                message: data.message ? data.message : '',
                                 data: _.omit(data, ['code', 'message'])
                             });
                         }
                     });
                 });
             } else {
-                log.warn("Can't find any controller for url path: " + urlPath);
+                log.warn('Can\'t find any controller for url path: ' + urlPath);
             }
         },
 
@@ -125,7 +124,7 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
          */
         execController: function (controllerStr, previousData, req, res, next) {
             let callController = this.getController(controllerStr);
-            callController(previousData, req, res, function (err, data){
+            callController(previousData, req, res, function (err, data) {
                 if (err) { return next(err); }
                 next(null, _.extend(previousData, data));
             });

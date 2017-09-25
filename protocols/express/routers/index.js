@@ -6,11 +6,11 @@
 
 module.exports = [
     {
-        method : 'get',
-        endpoint : '/',
+        method: 'get',
+        endpoint: '/',
         fileField: null,
         fileObjArray: 'none',
-        handlers : [
+        handlers: [
             'WelcomeInterface.welcome'
         ]
     }

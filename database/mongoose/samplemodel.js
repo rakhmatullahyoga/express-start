@@ -13,10 +13,10 @@ module.exports = function (MODULES) {
     }, {timestamps: {}});
 
     // define your plugin here, see examples below
-    // let mongoose_delete = MODULES.MONGOOSE_DELETE;
-    // let mongoose_unique = MODULES.MONGOOSE_UNIQUE;
-    // sampleSchema.plugin(mongoose_delete, {deletedAt: true, overrideMethods: 'all'});
-    // sampleSchema.plugin(mongoose_unique, {message: 'is already have profile data.'});
+    // let mongooseDelete = MODULES.MONGOOSE_DELETE;
+    // let mongooseUnique = MODULES.MONGOOSE_UNIQUE;
+    // sampleSchema.plugin(mongooseDelete, {deletedAt: true, overrideMethods: 'all'});
+    // sampleSchema.plugin(mongooseUnique, {message: 'is already have profile data.'});
 
     return sampleSchema;
 };

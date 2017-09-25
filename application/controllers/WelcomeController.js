@@ -15,7 +15,7 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
          * }
          * @param callback Callback function
          */
-        welcome: function(param, callback) {
+        welcome: function (param, callback) {
             welcomeService.welcome({}, callback);
         }
     };

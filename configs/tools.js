@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = function (MODULES, CONSTANTS, callback) {
-    function loadToolsAndDatabase(callback) {
+    function loadToolsAndDatabase (callback) {
         console.time('Loading app tools and database');
         // Define parameter for initialization
         let TOOLS = {};
@@ -37,7 +37,7 @@ module.exports = function (MODULES, CONSTANTS, callback) {
             filename: function (req, file, cb) {
                 MODULES.CRYPTO.pseudoRandomBytes(16, function (err, raw) {
                     cb(err, err ? undefined : raw.toString('hex') + MODULES.PATH.extname(file.originalname));
-                })
+                });
             }
         });
         TOOLS.MULTER = MODULES.MULTER({storage: storage});
@@ -56,7 +56,7 @@ module.exports = function (MODULES, CONSTANTS, callback) {
         callback(null, TOOLS);
     }
 
-    function loadApplicationLayer(tools, callback) {
+    function loadApplicationLayer (tools, callback) {
         console.time('Loading services, controllers and interfaces');
         // Initialize services
         tools.SERVICES = require(CONSTANTS.PATH.CLASS_LOADER)(tools, MODULES, CONSTANTS, CONSTANTS.PATH.SERVICES_PATH);
@@ -75,7 +75,7 @@ module.exports = function (MODULES, CONSTANTS, callback) {
         loadToolsAndDatabase,
         loadApplicationLayer
     ], function (err, result) {
-        if(err) {
+        if (err) {
             throw err;
         } else {
             callback(null, result);

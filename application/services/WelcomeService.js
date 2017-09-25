@@ -12,7 +12,7 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
          * @param callback Callback function
          */
         welcome: function (params, callback) {
-            callback(null, {message: "Welcome!"});
+            callback(null, {message: 'Welcome!'});
         }
     };
 };

@@ -7,7 +7,7 @@ let welcomeController;
 let should = chai.should();
 
 describe('Controller: WelcomeController', function () {
-    before('load helpers', function () {
+    before('load helpers', function (done) {
         // suppress console logging and timer
         console.time = function () { };
         console.timeEnd = function () { };
@@ -18,7 +18,12 @@ describe('Controller: WelcomeController', function () {
         let constants = require('../../../configs/constants');
         let modules = require('../../../configs/modules');
         require('../../../configs/tools')(modules, constants, function (err, tools) {
-            welcomeController = require('../../../application/controllers/WelcomeController')(tools, modules, constants);
+            if (err) {
+                done(err);
+            } else {
+                welcomeController = require('../../../application/controllers/WelcomeController')(tools, modules, constants);
+                done();
+            }
         });
     });
 

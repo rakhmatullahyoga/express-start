@@ -14,6 +14,7 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
     APP.use(MODULES.CORS());
     APP.use(MODULES.EXPRESS_LOGGER.create(TOOLS.LOG));
     APP.use(MODULES.METHOD_OVERRIDE());
+
     // Make directory '/public' as a static file content
     APP.use('/public', MODULES.EXPRESS.static(CONSTANTS.PATH.PUBLIC_FILE_PATH));
 
@@ -24,7 +25,7 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
     require(CONSTANTS.PATH.ROUTERS_LOADER)(TOOLS, APP, CONSTANTS, MODULES);
 
     // Not found route handler
-    APP.use(function(req, res) {
+    APP.use(function (req, res) {
         return res.status(404).json({ status: MODULES.HTTP.STATUS_CODES[404] });
     });
 

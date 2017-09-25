@@ -7,7 +7,7 @@ let welcomeService;
 let should = chai.should();
 
 describe('Service: WelcomeService', function () {
-    before('load helpers', function () {
+    before('load helpers', function (done) {
         // suppress console logging and timer
         console.time = function () { };
         console.timeEnd = function () { };
@@ -18,7 +18,12 @@ describe('Service: WelcomeService', function () {
         let constants = require('../../../configs/constants');
         let modules = require('../../../configs/modules');
         require('../../../configs/tools')(modules, constants, function (err, tools) {
-            welcomeService = require('../../../application/services/WelcomeService')(tools, modules, constants);
+            if (err) {
+                done(err);
+            } else {
+                welcomeService = require('../../../application/services/WelcomeService')(tools, modules, constants);
+                done();
+            }
         });
     });
 
