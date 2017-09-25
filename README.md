@@ -37,7 +37,9 @@
     - undo: `node node_modules/.bin/sequelize db:migrate:undo`
     - help: `node node_modules/.bin/sequelize help`
 
-* How to run tests: (TBD)
+* How to run tests:
+
+    `npm test`
 
 * Deployment instructions
 
@@ -45,9 +47,16 @@
 
 ### Contribution guidelines ###
 
-* Writing tests: (TBD)
-* Code review: (TBD)
-* Other guidelines: (TBD)
+* Writing tests:
+
+    This project use [Mocha](http://mochajs.org/) as the testing environment, and [Chai](http://chaijs.com/) as the assertion library.
+    This project also provide code coverage using [Istanbul](https://www.npmjs.com/package/istanbul).
+    Code coverage report can be viewed in `coverage/lcov-report/index.html` after running test.
+    All test files should be located under the `tests` directory.
+
+* Writing code:
+
+    Please fork this repository first for starting a contribution.
 
 ### Who do I talk to? ###
 
