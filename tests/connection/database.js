@@ -15,7 +15,7 @@ describe('Database connectivity', function () {
         it('should connect to sequelize and database server', function (done) {
             let sequelize = new Sequelize(process.env.DB_CONNECTION + '://' + process.env.DB_USERNAME + ':' +
                 process.env.DB_PASSWORD + '@' + process.env.DB_HOST + ':' + process.env.DB_PORT +
-                '/' + process.env.DB_DATABASE);
+                '/' + process.env.DB_DATABASE, {logging: false});
             sequelize.authenticate().then(function () {
                 done();
             }).catch(function (err) {
