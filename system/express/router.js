@@ -124,9 +124,13 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
          */
         execController: function (controllerStr, previousData, req, res, next) {
             let callController = this.getController(controllerStr);
-            callController(previousData, req, res, function (err, data) {
-                if (err) { return next(err); }
-                next(null, _.extend(previousData, data));
+            callController(previousData, req, res, function (err, data, clear) {
+                if (err) {
+                    next(err);
+                } else {
+                    let newData = clear ? data : _.extend(previousData, data);
+                    next(null, newData);
+                }
             });
         },
 
