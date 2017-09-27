@@ -49,7 +49,7 @@ describe('Express endpoints', function () {
         });
     });
 
-    after('remove mongoose model', function (done) {
+    after('close application server', function (done) {
         server.close();
         done();
     });
