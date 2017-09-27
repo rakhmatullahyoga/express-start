@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha tests -- --recursive"
+    "test": "node node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha tests -- --recursive --no-timeouts"
   },
   "repository": {
     "type": "git",
@@ -39,6 +39,7 @@
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "dotenv": "^4.0.0",
+    "eslint": "^4.7.2",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-mocha": "^4.11.0",
