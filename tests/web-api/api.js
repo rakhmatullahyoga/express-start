@@ -8,14 +8,19 @@ const should = chai.should();
 let server;
 
 describe('Express endpoints', function () {
-    before('Starting up application', function () {
+    before('Starting up application', function (done) {
         chai.use(chaiHttp);
         // mute logger
         console.time = function () { };
         console.timeEnd = function () { };
         console.info = function () { };
 
-        server = require('../../index');
+        require('../../index').then(function (app) {
+            server = app;
+            done();
+        }).catch(function (err) {
+            done(err);
+        });
     });
 
     describe('GET /', function () {
