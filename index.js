@@ -33,6 +33,8 @@ module.exports = new Promise(function (resolve, reject) {
         if (err) {
             reject(err);
         } else {
+            console.timeEnd('Total application preparation time');
+
             resolve(require(CONSTANTS.PATH.EXPRESS_SERVER)(tools, MODULES, CONSTANTS));
         }
     }

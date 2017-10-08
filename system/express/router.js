@@ -16,7 +16,6 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
 
     // Initialize endpoints generator
     let endpointLoader = {
-
         /**
          * Generate Express endpoints from files recursively through directories
          * @param basePath Path of endpoints
@@ -90,12 +89,12 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
                     async.waterfall(controllerMethods, function (err, data) {
                         // return error response immediately whenever error arg on callback function exists
                         if (err) {
-                            let code = 500;
+                            let code = err.code ? (_.isNumber(err.code) ? err.code : 500) : 500;
                             log.error(err);
                             return res.status(code).json({
                                 code: code,
                                 status: http.STATUS_CODES[code],
-                                message: 'Internal server error.',
+                                message: err.message ? err.message : 'Internal server error',
                                 data: {}
                             });
                         } else {
@@ -124,14 +123,18 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
          */
         execController: function (controllerStr, previousData, req, res, next) {
             let callController = this.getController(controllerStr);
-            callController(previousData, req, res, function (err, data, clear) {
-                if (err) {
-                    next(err);
-                } else {
-                    let newData = clear ? data : _.extend(previousData, data);
-                    next(null, newData);
-                }
-            });
+            if(!callController) {
+                throw new Error('Controller ' + controllerStr + ' not found');
+            } else {
+                callController(previousData, req, res, function (err, data, clear) {
+                    if (err) {
+                        next(err);
+                    } else {
+                        let newData = clear ? data : _.extend(previousData, data);
+                        next(null, newData);
+                    }
+                });
+            }
         },
 
         /**

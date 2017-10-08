@@ -12,16 +12,13 @@ describe('Controller: WelcomeController', function () {
         console.time = function () { };
         console.timeEnd = function () { };
 
-        let mongoose = require('mongoose');
-        mongoose.connection.models = {};
-
         let constants = require('../../../configs/constants');
         let modules = require('../../../configs/modules');
         require('../../../configs/tools')(modules, constants, function (err, tools) {
             if (err) {
                 done(err);
             } else {
-                welcomeController = require('../../../application/controllers/WelcomeController')(tools, modules, constants);
+                welcomeController = tools.CONTROLLERS.WelcomeController;
                 done();
             }
         });
