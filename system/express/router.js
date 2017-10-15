@@ -98,11 +98,11 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
                                 data: {}
                             });
                         } else {
-                            let code = data.code ? (_.isNumber(data.code) ? data.code : 200) : 200;
+                            let code = data && data.code ? (_.isNumber(data.code) ? data.code : 200) : 200;
                             res.status(code).json({
                                 code: code,
                                 status: http.STATUS_CODES[code],
-                                message: data.message ? data.message : '',
+                                message: data && data.message ? data.message : '',
                                 data: _.omit(data, ['code', 'message'])
                             });
                         }
