@@ -8,8 +8,8 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
     return {
         /**
          * Get return data for testing
-         * @param params Any JSON Object
-         * @param callback Callback function
+         * @param params {Object} Any JSON Object
+         * @param callback {Function} Callback function
          */
         welcome: function (params, callback) {
             callback(null, {message: 'Welcome!'});

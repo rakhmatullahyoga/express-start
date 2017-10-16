@@ -9,13 +9,10 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
     return {
         /**
          * Says hello
-         * @param previousData Data from previous handler, must contains:
-         * {
-         *    *nothing*
-         * }
-         * @param req Request object (express)
-         * @param res Response object (express)
-         * @param next Callback function for next handler
+         * @param previousData {Object} Data from previous handler
+         * @param req {Object} Request object (express)
+         * @param res {Object} Response object (express)
+         * @param next {Function} Callback function for next handler
          */
         welcome: function (previousData, req, res, next) {
             welcomeController.welcome(null, function (err, result) {

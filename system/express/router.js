@@ -18,8 +18,8 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
     let endpointLoader = {
         /**
          * Generate Express endpoints from files recursively through directories
-         * @param basePath Path of endpoints
-         * @param subPath Subdirectory of base path
+         * @param basePath {String} Path of endpoints
+         * @param subPath {String} Subdirectory of base path
          */
         recursiveGenerator: function generate (basePath, subPath) {
             let currentPath = basePath + (subPath ? '/' + subPath : '');
@@ -41,12 +41,19 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
 
         /**
          * Decompose a single endpoint from endpoint configs file
-         * @param routes List of endpoint config
-         * @param routeParent First url endpoint string
+         * @param routes {Array} List of endpoint config
+         * @param routeParent {String} First url endpoint string
          */
         generateEndpoint: function (routes, routeParent) {
             let self = this;
-            routes.forEach(function (routeConfig) {
+            routes.filter(function (routeConfig) {
+                if (routeConfig.method && routeConfig.endpoint && routeConfig.handlers) {
+                    return true;
+                } else {
+                    log.error(new Error('Route error: missing some required parameter(s)'));
+                    return false;
+                }
+            }).forEach(function (routeConfig) {
                 let urlPath, lastEndpoint;
                 let httpMethod = routeConfig.method.toLowerCase();
 
@@ -63,15 +70,15 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
 
         /**
          * Define complete handlers for an endpoint
-         * @param httpMethod Appropriate http method for a specific endpoint
-         * @param urlPath Url full path for the endpoint
-         * @param routeConfig Endpoint configuration
+         * @param httpMethod {String} Appropriate http method for a specific endpoint
+         * @param urlPath {String} Url full path for the endpoint
+         * @param routeConfig {Object} Endpoint configuration
          */
         endpointHandler: function (httpMethod, urlPath, routeConfig) {
             let self = this;
             // check if there exist one or more controller/handler for an endpoint
             if (routeConfig && routeConfig.handlers && routeConfig.handlers.length > 0) {
-                let fileHandler = routeConfig.fileField ? multer[routeConfig.fileObjArray](routeConfig.fileField) : multer.none();
+                let fileHandler = routeConfig.fileObjArray && routeConfig.fileField ? multer[routeConfig.fileObjArray](routeConfig.fileField) : multer.none();
                 APP[httpMethod](urlPath, fileHandler, function (req, res) {
                     let controllerMethods = [];
                     // define multiple controller/handler for an endpoint
@@ -115,15 +122,15 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
 
         /**
          * Generate a controller with callback for data transition among other controllers
-         * @param controllerStr Controller name
-         * @param previousData Data passed by the previous executed controller
-         * @param req Request object (express)
-         * @param res Response object (express)
-         * @param next Callback function for transition to the next controller
+         * @param controllerStr {String} Controller name
+         * @param previousData {Object} Data passed by the previous executed controller
+         * @param req {Object} Request object (express)
+         * @param res {Object} Response object (express)
+         * @param next {Function} Callback function for transition to the next controller
          */
         execController: function (controllerStr, previousData, req, res, next) {
             let callController = this.getController(controllerStr);
-            if(!callController) {
+            if (!callController) {
                 throw new Error('Controller ' + controllerStr + ' not found');
             } else {
                 callController(previousData, req, res, function (err, data, clear) {
@@ -139,8 +146,8 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
 
         /**
          * Get controller/handler function from interface list
-         * @param controllerStr Controller/handler name
-         * @returns controller/handler function
+         * @param controllerStr {String} Controller/handler name
+         * @returns {Function} controller/handler function
          */
         getController: function (controllerStr) {
             try {
@@ -153,6 +160,6 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
         }
     };
 
-    endpointLoader.recursiveGenerator(CONSTANTS.PATH.ROUTERS_PATH);
+    endpointLoader.recursiveGenerator(CONSTANTS.PATH.ROUTERS_PATH, null);
     console.timeEnd('Loading express routers');
 };
