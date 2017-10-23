@@ -5,27 +5,12 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
-let server;
+chai.use(chaiHttp);
 
 describe('Express endpoints', function () {
-    before('Starting up application', function (done) {
-        chai.use(chaiHttp);
-        // mute logger
-        console.time = function () { };
-        console.timeEnd = function () { };
-        console.info = function () { };
-
-        require('../../index').then(function (app) {
-            server = app;
-            done();
-        }).catch(function (err) {
-            done(err);
-        });
-    });
-
     describe('GET /', function () {
         it('should return success response', function (done) {
-            chai.request(server).get('/').end(function (err, response) {
+            chai.request(global.express_server).get('/').end(function (err, response) {
                 if (err) {
                     done(err);
                 } else {
@@ -39,7 +24,7 @@ describe('Express endpoints', function () {
 
     describe('POST /', function () {
         it('should return failure response', function (done) {
-            chai.request(server).post('/').end(function (err, response) {
+            chai.request(global.express_server).post('/').end(function (err, response) {
                 should.exist(err);
                 should.exist(response);
                 err.status.should.equal(404);
@@ -50,7 +35,7 @@ describe('Express endpoints', function () {
     });
 
     after('close application server', function (done) {
-        server.close();
+        global.express_server.close();
         done();
     });
 });

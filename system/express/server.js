@@ -29,12 +29,13 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
         return res.status(404).json({ status: MODULES.HTTP.STATUS_CODES[404] });
     });
 
-    // Starting the application server
-    let SERVER = APP.listen(process.env.APP_PORT, function () {
-        console.timeEnd('Loading express engine');
-        console.info('Listening on port: ' + SERVER.address().port);
+    return new Promise(function (resolve, reject) {
+        // Starting the application server
+        let SERVER = APP.listen(process.env.APP_PORT, function () {
+            console.timeEnd('Loading express engine');
+            console.info('Listening on port: ' + SERVER.address().port);
+        });
+        // Return APP for testing purpose
+        resolve(SERVER);
     });
-
-    // Return APP for testing purpose
-    return SERVER;
 };
