@@ -13,9 +13,7 @@ describe('Database connectivity', function () {
 
     describe('Sequelize ORM', function () {
         it('should connect to sequelize and database server', function (done) {
-            let sequelize = new Sequelize(process.env.DB_CONNECTION + '://' + process.env.DB_USERNAME + ':' +
-                process.env.DB_PASSWORD + '@' + process.env.DB_HOST + ':' + process.env.DB_PORT +
-                '/' + process.env.DB_DATABASE, {logging: false});
+            let sequelize = new Sequelize(process.env.MYSQL_URL, {logging: false});
             sequelize.authenticate().then(function () {
                 done();
             }).catch(function (err) {
@@ -26,20 +24,13 @@ describe('Database connectivity', function () {
 
     describe('Mongoose schema', function () {
         it('should connect to mongoose and mongodb server', function (done) {
-            if (process.env.MONGO_USER && process.env.MONGO_PASS) {
-                mongoose.connect('mongodb://' + process.env.MONGO_USER + ':' +
-                    process.env.MONGO_PASS + '@' + process.env.MONGO_HOST + ':' + process.env.MONGO_PORT +
-                    '/' + process.env.MONGO_DATABASE, {useMongoClient: true}, done);
-            } else {
-                mongoose.connect('mongodb://' + process.env.MONGO_HOST + ':' + process.env.MONGO_PORT +
-                    '/' + process.env.MONGO_DATABASE, {useMongoClient: true}, done);
-            }
+            mongoose.connect(process.env.MONGO_URL, {useMongoClient: true}, done);
         });
     });
 
     describe('Redis in-memory data', function () {
         it('should connect to redis server', function (done) {
-            let redisClient = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+            let redisClient = redis.createClient(process.env.REDIS_URL);
             redisClient.on('connect', function () {
                 done();
             });

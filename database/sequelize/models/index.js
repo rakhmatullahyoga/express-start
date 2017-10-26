@@ -7,9 +7,7 @@ module.exports = function (MODULES) {
     let basename = path.basename(module.filename);
     let db = {};
 
-    let sequelize = new Sequelize(process.env.DB_CONNECTION + '://' + process.env.DB_USERNAME + ':' +
-        process.env.DB_PASSWORD + '@' + process.env.DB_HOST + ':' + process.env.DB_PORT +
-        '/' + process.env.DB_DATABASE);
+    let sequelize = new Sequelize(process.env.MYSQL_URL);
 
     fs.readdirSync(__dirname).filter(function (file) {
         return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
