@@ -56,7 +56,6 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
             }).forEach(function (routeConfig) {
                 let urlPath, lastEndpoint;
                 let httpMethod = routeConfig.method.toLowerCase();
-
                 routeParent = routeParent.toLowerCase();
                 lastEndpoint = routeConfig.endpoint;
                 if (routeParent === 'index') {
@@ -101,8 +100,8 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
                             return res.status(code).json({
                                 code: code,
                                 status: http.STATUS_CODES[code],
-                                message: err.message ? err.message : 'Internal server error',
-                                data: {}
+                                message: err.message ? err.message : 'Unhandled error',
+                                data: err || {}
                             });
                         } else {
                             let code = data && data.code ? (_.isNumber(data.code) ? data.code : 200) : 200;

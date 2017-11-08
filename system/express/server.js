@@ -29,6 +29,17 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
         return res.status(404).json({ status: MODULES.HTTP.STATUS_CODES[404] });
     });
 
+    // Unhandled error should be 'handled'
+    APP.use(function (err, req, res, next) {
+        TOOLS.LOG.error(err);
+        return res.status(500).json({
+            code: 500,
+            status: MODULES.HTTP.STATUS_CODES[500],
+            message: 'Unhandled error',
+            data: {}
+        });
+    });
+
     return new Promise(function (resolve, reject) {
         // Starting the application server
         let SERVER = APP.listen(process.env.APP_PORT, function () {
