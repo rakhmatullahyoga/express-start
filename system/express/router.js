@@ -92,16 +92,15 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
                         });
                     });
                     // treat controllers with waterfall flow
-                    async.waterfall(controllerMethods, function (err, data) {
-                        // return error response immediately whenever error arg on callback function exists
-                        if (err) {
-                            let code = err.code ? (_.isNumber(err.code) ? err.code : 500) : 500;
-                            log.error(err);
+                    async.waterfall(controllerMethods, function (stopData, data) {
+                        // return response immediately or whenever error arg on callback function exists
+                        if (stopData) {
+                            let code = stopData.code ? (_.isNumber(stopData.code) ? stopData.code : 200) : 200;
                             return res.status(code).json({
                                 code: code,
                                 status: http.STATUS_CODES[code],
-                                message: err.message ? err.message : 'Unhandled error',
-                                data: err || {}
+                                message: stopData.message ? stopData.message : '',
+                                data: _.omit(stopData, ['code', 'message']) || {}
                             });
                         } else {
                             let code = data && data.code ? (_.isNumber(data.code) ? data.code : 200) : 200;
