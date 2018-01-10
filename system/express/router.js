@@ -95,7 +95,7 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
                     async.waterfall(controllerMethods, function (stopData, data) {
                         // return response immediately or whenever error arg on callback function exists
                         if (stopData) {
-                            let code = stopData.code ? (_.isNumber(stopData.code) ? stopData.code : 200) : 200;
+                            let code = stopData.code ? (_.isNumber(stopData.code) ? stopData.code : 500) : 500;
                             return res.status(code).json({
                                 code: code,
                                 status: http.STATUS_CODES[code],

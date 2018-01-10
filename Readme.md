@@ -4,11 +4,11 @@
 
 * Custom MVC boilerplate for Node.js, using Express.js
 
-* Application version: 2.0.0
+* Application version: 2.0.1
 
 ### How do I get set up? ###
 
-* Install Node.js v7.0.0
+* Install Node.js latest version
 
 * Clone this repository:
 
@@ -39,9 +39,15 @@
 
     `npm test`
 
-* Deployment instructions
+### Deployment guidelines ###
 
-    `npm start` or `node index.js`    
+* Deployment instructions (using Node.js local engine)
+
+    `npm start` or `node index.js`
+    
+* Deployment instructions (using Docker engine)
+
+    `docker-compose --project-name "<service_name>" up --build -d`
 
 ### Contribution guidelines ###
 
