@@ -18,20 +18,20 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
     let endpointLoader = {
         /**
          * Generate Express endpoints from files recursively through directories
-         * @param basePath {String} Path of endpoints
          * @param subPath {String} Subdirectory of base path
          */
-        recursiveGenerator: function generate (basePath, subPath) {
-            let currentPath = basePath + (subPath ? '/' + subPath : '');
+        recursiveGenerator: function generate (subPath) {
+            let currentPath = CONSTANTS.PATH.ROUTERS_PATH + (subPath ? '/' + subPath : '');
             fs.readdirSync(currentPath).forEach(function (file) {
                 if (fs.statSync(currentPath + '/' + file).isDirectory()) {
                     // recursion invocation
-                    generate(basePath, (subPath ? subPath + '/' : '') + file);
+                    generate((subPath ? subPath + '/' : '') + file);
                 } else {
                     // recursion base
                     if ((file.indexOf('.') !== 0) && (file.slice(-3) === '.js')) {
                         let apiConfig = require(currentPath + '/' + file);
-                        endpointLoader.generateEndpoint(apiConfig, (subPath ? subPath + '/' : '') + file.replace('.js', ''));
+                        let filename = file.replace('.js', '');
+                        endpointLoader.generateEndpoint(apiConfig, (subPath ? subPath + (filename === 'index' ? '' : '/') : '') + (filename === 'index' ? '' : filename));
                     } else { // invalid endpoint file type
                         log.warn(`file '${currentPath + '/' + file}' is not supported for express router`);
                     }
@@ -54,15 +54,9 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
                     return false;
                 }
             }).forEach(function (routeConfig) {
-                let urlPath, lastEndpoint;
                 let httpMethod = routeConfig.method.toLowerCase();
                 routeParent = routeParent.toLowerCase();
-                lastEndpoint = routeConfig.endpoint;
-                if (routeParent === 'index') {
-                    urlPath = lastEndpoint;
-                } else {
-                    urlPath = '/' + routeParent + lastEndpoint;
-                }
+                let urlPath = (routeParent ? '/' : '') + routeParent + routeConfig.endpoint;
                 self.endpointHandler(httpMethod, urlPath, routeConfig);
             });
         },
@@ -158,6 +152,6 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
         }
     };
 
-    endpointLoader.recursiveGenerator(CONSTANTS.PATH.ROUTERS_PATH, null);
+    endpointLoader.recursiveGenerator(null);
     console.timeEnd('Loading express routers');
 };
