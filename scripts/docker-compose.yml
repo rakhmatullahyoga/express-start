@@ -4,20 +4,20 @@ services:
         container_name: myapp-redis
         image: "redis:latest"
         restart: always
-        expose:  # WARNING: use 'expose' instead of 'ports' when on production
-            - "6379"
+        ports:  # WARNING: use 'expose' instead of 'ports' when on production
+            - "${REDIS_PORT}:6379"
     mongodb:
         container_name: myapp-mongodb
         image: "mongo:latest"
         restart: always
-        expose:
-            - "27017"
+        ports:  # WARNING: use 'expose' instead of 'ports' when on production
+            - "${MONGO_PORT}:27017"
     mysql:
         container_name: myapp-mysql
         image: "mysql:latest"
         restart: always
-        expose:
-            - "3306"
+        ports:  # WARNING: use 'expose' instead of 'ports' when on production
+            - "${MYSQL_PORT}:3306"
         environment:
             MYSQL_RANDOM_ROOT_PASSWORD: "yes"
             MYSQL_USER: ${MYSQL_USER}
