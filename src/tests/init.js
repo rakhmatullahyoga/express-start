@@ -6,9 +6,9 @@ describe('Initiate application', function () {
         console.timeEnd = function () { };
         console.info = function () { };
 
-        global.constants = require('../configs/constants');
-        global.modules = require('../configs/modules');
-        require('../configs/tools')(global.modules, global.constants, function (err, tools) {
+        global.constants = require('../main/configs/constants');
+        global.modules = require('../main/configs/modules');
+        require('../main/configs/tools')(global.modules, global.constants, function (err, tools) {
             if (err) {
                 done(err);
             } else {

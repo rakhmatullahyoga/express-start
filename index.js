@@ -14,7 +14,7 @@ console.info('Starting app...');
 
 // LOAD APPLICATION'S CONSTANTS
 console.time('Loading app constants');
-let CONSTANTS = require('./configs/constants');
+let CONSTANTS = require('./src/main/configs/constants');
 console.timeEnd('Loading app constants');
 
 // DEFINE ALL MODULES
