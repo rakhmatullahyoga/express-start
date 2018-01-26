@@ -6,7 +6,7 @@
 
 console.time('Total application preparation time');
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
     require('dotenv').config();
 }
 
@@ -35,7 +35,7 @@ function initiateAppServers (err, tools) {
         console.timeEnd('Total application preparation time');
 
         // Initialize express server
-        require(CONSTANTS.PATH.EXPRESS_SERVER)(tools, MODULES, CONSTANTS);
+        require(CONSTANTS.PATH.EXPRESS_SERVER)(tools, MODULES, CONSTANTS, process.env.APP_PORT);
     }
 }
 

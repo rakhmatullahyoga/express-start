@@ -1,6 +1,8 @@
 describe('Initiate application', function () {
     it('Setup controllers, services and express server as global variables', function (done) {
-        require('dotenv').load();
+        if (process.env.NODE_ENV === 'development') {
+            require('dotenv').config();
+        }
         // mute logger
         console.time = function () { };
         console.timeEnd = function () { };
@@ -14,7 +16,7 @@ describe('Initiate application', function () {
             } else {
                 global.controllers = tools.CONTROLLERS;
                 global.services = tools.SERVICES;
-                require(global.constants.PATH.EXPRESS_SERVER)(tools, global.modules, global.constants).then(function (server) {
+                require(global.constants.PATH.EXPRESS_SERVER)(tools, global.modules, global.constants, process.env.TEST_PORT).then(function (server) {
                     global.express_server = server;
                     done();
                 });

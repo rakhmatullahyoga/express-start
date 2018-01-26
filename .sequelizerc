@@ -1,8 +1,8 @@
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
     require('dotenv').config();
 }
 const path = require('path');
-const sequelizePath = 'database/sequelize'
+const sequelizePath = 'src/main/database/sequelize'
 
 module.exports = {
     'config': path.resolve(sequelizePath, 'config.js'),

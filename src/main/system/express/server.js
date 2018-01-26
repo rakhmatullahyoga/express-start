@@ -4,7 +4,7 @@
 
 'use strict';
 
-module.exports = function (TOOLS, MODULES, CONSTANTS) {
+module.exports = function (TOOLS, MODULES, CONSTANTS, EXPRESS_PORT) {
     console.time('Loading express engine');
 
     // Initialize Express engine
@@ -42,7 +42,7 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
 
     return new Promise(function (resolve, reject) {
         // Starting the application server
-        let SERVER = APP.listen(process.env.APP_PORT, function () {
+        let SERVER = APP.listen(EXPRESS_PORT, function () {
             console.timeEnd('Loading express engine');
             console.info('Listening on port: ' + SERVER.address().port);
         });

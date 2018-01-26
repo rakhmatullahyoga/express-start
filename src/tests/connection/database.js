@@ -8,7 +8,9 @@ let redis = require('redis');
 
 describe('Database connectivity', function () {
     before('load environments', function () {
-        require('dotenv').load();
+        if (process.env.NODE_ENV === 'development') {
+            require('dotenv').config();
+        }
     });
 
     describe('Sequelize ORM', function () {

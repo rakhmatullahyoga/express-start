@@ -85,5 +85,11 @@ typings/
 .env
 
 ### Custom ###
+# Public files
 public/*
+
+# Docker volumes
+scripts/volumes/*
+
+# Dummy gitkeep to keep directories without containing files
 !.gitkeep

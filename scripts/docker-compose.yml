@@ -1,26 +1,47 @@
 version: "3"
 services:
-  redis:
-    image: "redis:latest"
-    expose:
-      - 6379
-  mongo:
-    image: "mongo:latest"
-    expose:
-      - 27017
-  mysql:
-    image: "mysql:latest"
-    expose:
-      - 3306
-  web:
-    build: ../
-    ports:
-      - "3000:3000"
-    depends_on:
-      - redis
-      - mongo
-      - mysql
-    links:
-      - redis
-      - mongo
-      - mysql
+    redis:
+        container_name: myapp-redis
+        image: "redis:latest"
+        restart: always
+        expose:  # WARNING: use 'expose' instead of 'ports' when on production
+            - "6379"
+    mongodb:
+        container_name: myapp-mongodb
+        image: "mongo:latest"
+        restart: always
+        expose:
+            - "27017"
+    mysql:
+        container_name: myapp-mysql
+        image: "mysql:latest"
+        restart: always
+        expose:
+            - "3306"
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+        volumes:
+            - "${PWD}/volumes/mysql:/var/lib/mysql"
+    api:
+        container_name: myapp-api
+        build:
+            context: ../
+        restart: always
+        environment:
+            - NODE_ENV=${NODE_ENV}
+            - MONGO_URL=mongodb://mongodb:27017/${MONGO_DB}
+            - REDIS_URL=redis://redis:6379
+            - MYSQL_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}
+        ports:
+            - "${APP_PORT}:${APP_PORT}"
+        depends_on:
+            - redis
+            - mongodb
+            - mysql
+        links:
+            - redis
+            - mongodb
+            - mysql
