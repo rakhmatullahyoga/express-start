@@ -2,7 +2,7 @@
 echo "============================================"
 echo "Run database migration and seeds . . . ."
 echo "============================================"
-docker exec myapp-api node node_modules/.bin/sequelize db:migrate
+docker-compose run --rm api node node_modules/.bin/sequelize db:migrate
 echo "============================================"
 echo "Database initialization succeed!"
 echo "============================================"

@@ -16,7 +16,7 @@ describe('Initiate application', function () {
             } else {
                 global.controllers = tools.CONTROLLERS;
                 global.services = tools.SERVICES;
-                require(global.constants.PATH.EXPRESS_SERVER)(tools, global.modules, global.constants, process.env.TEST_PORT).then(function (server) {
+                require(global.constants.PATH.EXPRESS_SERVER)(tools, global.modules, global.constants).then(function (server) {
                     global.express_server = server;
                     done();
                 });

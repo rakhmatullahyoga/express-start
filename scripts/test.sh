@@ -2,7 +2,7 @@
 echo "============================================"
 echo "Run application tests . . . ."
 echo "============================================"
-docker exec myapp-api npm test
+docker-compose run --rm api npm test
 echo "============================================"
 echo "Application testing completed!"
 echo "============================================"

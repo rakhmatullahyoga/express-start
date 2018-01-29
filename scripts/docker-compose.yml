@@ -9,6 +9,9 @@ services:
     mongodb:
         container_name: ${APP_NAME}-mongodb
         image: "mongo:latest"
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+            - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
         restart: always
         ports:  # WARNING: use 'expose' instead of 'ports' when on production
             - "${MONGO_PORT}:27017"

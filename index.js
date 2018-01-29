@@ -35,7 +35,7 @@ function initiateAppServers (err, tools) {
         console.timeEnd('Total application preparation time');
 
         // Initialize express server
-        require(CONSTANTS.PATH.EXPRESS_SERVER)(tools, MODULES, CONSTANTS, process.env.APP_PORT);
+        require(CONSTANTS.PATH.EXPRESS_SERVER)(tools, MODULES, CONSTANTS);
     }
 }
 
