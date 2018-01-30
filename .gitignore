@@ -89,7 +89,7 @@ typings/
 public/*
 
 # Docker volumes
-scripts/volumes/*
+volumes/*
 
 # Dummy gitkeep to keep directories without containing files
 !.gitkeep
