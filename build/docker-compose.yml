@@ -3,9 +3,13 @@ services:
     redis:
         container_name: ${APP_NAME}-redis
         image: "redis:latest"
-        restart: always
         ports:  # WARNING: use 'expose' instead of 'ports' when on production
             - "${REDIS_PORT}:6379"
+        volumes:
+            - "${PWD}/../volumes/redis:/data"
+        command: redis-server --appendonly yes
+        healthcheck:
+            test: exit 0
     mongodb:
         container_name: ${APP_NAME}-mongodb
         image: "mongo:latest"
@@ -13,10 +17,11 @@ services:
             - "${MONGO_PORT}:27017"
         volumes:
             - "mongodata:/data/db"
+        healthcheck:
+            test: exit 0
     mysql:
         container_name: ${APP_NAME}-mysql
         image: "mysql:latest"
-        restart: always
         ports:  # WARNING: use 'expose' instead of 'ports' when on production
             - "${MYSQL_PORT}:3306"
         environment:
@@ -26,12 +31,14 @@ services:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
         volumes:
             - "${PWD}/../volumes/mysql:/var/lib/mysql"
+        healthcheck:
+            test: exit 0
     api:
         container_name: ${APP_NAME}-api
         build:
             context: ../
         image: "${APP_NAME}"
-        restart: always
+        restart: on-failure
         environment:
             - NODE_ENV=${NODE_ENV}
             - MONGO_URL=mongodb://mongodb:27017/${MONGO_DB}
@@ -50,5 +57,7 @@ services:
             - redis
             - mongodb
             - mysql
+        healthcheck:
+            test: npm test || exit 0
 volumes:
     mongodata:
