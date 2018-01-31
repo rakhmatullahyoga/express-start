@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 echo "============================================"
-echo "Build and starting the application . . . ."
+echo "Building application containers . . . ."
 echo "============================================"
-docker-compose up -d --build
+docker-compose build --no-cache
 echo "============================================"
-echo "Application started!"
+echo "Application containers built!"
 echo "============================================"
 echo ""

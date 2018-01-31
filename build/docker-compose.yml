@@ -30,6 +30,7 @@ services:
         container_name: ${APP_NAME}-api
         build:
             context: ../
+        image: "${APP_NAME}"
         restart: always
         environment:
             - NODE_ENV=${NODE_ENV}
