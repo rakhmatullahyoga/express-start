@@ -1,4 +1,4 @@
-version: "3"
+version: "3.3"
 services:
     redis:
         container_name: ${APP_NAME}-redis
@@ -9,12 +9,10 @@ services:
     mongodb:
         container_name: ${APP_NAME}-mongodb
         image: "mongo:latest"
-        environment:
-            - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
-            - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
-        restart: always
         ports:  # WARNING: use 'expose' instead of 'ports' when on production
             - "${MONGO_PORT}:27017"
+        volumes:
+            - "mongodata:/data/db"
     mysql:
         container_name: ${APP_NAME}-mysql
         image: "mysql:latest"
@@ -51,3 +49,5 @@ services:
             - redis
             - mongodb
             - mysql
+volumes:
+    mongodata:

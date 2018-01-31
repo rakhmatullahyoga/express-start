@@ -6,5 +6,11 @@ if (process.env.NODE_ENV === 'development') {
 module.exports = {
     'development': {
         'url': process.env.MYSQL_URL
+    },
+    'staging': {
+        'url': process.env.MYSQL_URL
+    },
+    'production': {
+        'url': process.env.MYSQL_URL
     }
 };
