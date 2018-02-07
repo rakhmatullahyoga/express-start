@@ -43,6 +43,7 @@ services:
         restart: on-failure
         environment:
             - NODE_ENV=${NODE_ENV}
+            - APP_PORT=${APP_PORT}
             - MONGO_URL=mongodb://mongodb:27017/${MONGO_DB}
             - REDIS_URL=redis://redis:6379
             - MYSQL_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}
