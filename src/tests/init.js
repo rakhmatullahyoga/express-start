@@ -1,6 +1,6 @@
 describe('Initiate application', function () {
     it('Setup controllers, services and express server as global variables', function (done) {
-        if (process.env.NODE_ENV === 'development') {
+        if (!process.env.NODE_ENV) {
             require('dotenv').config();
         }
         // mute logger

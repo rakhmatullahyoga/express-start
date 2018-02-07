@@ -6,7 +6,7 @@
 
 console.time('Total application preparation time');
 
-if (process.env.NODE_ENV === 'development') {
+if (!process.env.NODE_ENV) {
     require('dotenv').config();
 }
 
@@ -14,7 +14,7 @@ console.info('Starting app...');
 
 // LOAD APPLICATION'S CONSTANTS
 console.time('Loading app constants');
-let CONSTANTS = require('./src/main/configs/constants');
+let CONSTANTS = require('./configs/constants');
 console.timeEnd('Loading app constants');
 
 // DEFINE ALL MODULES

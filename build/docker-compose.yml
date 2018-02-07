@@ -37,6 +37,8 @@ services:
         container_name: ${APP_NAME}-api
         build:
             context: ../
+            args:
+                - NODE_ENV=${NODE_ENV}
         image: "${APP_NAME}"
         restart: on-failure
         environment:
@@ -45,8 +47,8 @@ services:
             - REDIS_URL=redis://redis:6379
             - MYSQL_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}
         volumes:
-            - "${PWD}/../volumes/public-file:/app/public"
-            - "${PWD}/../volumes/logs-file:/app/logs"
+            - "${PWD}/../public:/app/public"
+            - "${PWD}/../logs:/app/logs"
         ports:
             - "${APP_PORT}:${APP_PORT}"
         depends_on:

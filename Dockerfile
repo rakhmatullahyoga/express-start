@@ -1,6 +1,10 @@
 # Using latest Node.js image
 FROM node:latest
 
+# Set environment variable during build process
+ARG NODE_ENV
+ENV NODE_ENV "$NODE_ENV"
+
 # Create app directory
 WORKDIR /usr/src/app
 

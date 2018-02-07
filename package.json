@@ -1,15 +1,15 @@
 {
-  "name": "ExpRest-MVC",
-  "version": "2.0.0",
+  "name": "Node-Service",
+  "version": "3.0.0",
   "description": "Custom MVC framework for building REST API application using Express.js",
-  "main": "index.js",
+  "main": "src/main/index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/main/index.js",
     "test": "node node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha src/tests -- --recursive --no-timeouts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rakhmatullahyoga/ExpRest-MVC.git"
+    "url": "git+https://github.com/rakhmatullahyoga/Node-Service.git"
   },
   "author": {
     "name": "Rakhmatullah Yoga Sutrisna",
