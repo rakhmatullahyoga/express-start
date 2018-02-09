@@ -1,20 +1,43 @@
-# Node-Service #
+# express-start #
 
-### What is this? ###
+### Introduction ###
 
-* Custom MVC boilerplate for Node.js, using Express.js
+This repository contains express-start project, a boilerplate for Node.js REST API application using Express.js as its main server for http protocol.
+You can use this repo as a template for REST API web service development.
+This boilerplate is already powered by docker for containerization and application deployment purposes.
+You can add or remove some third party plugin as necessary, such as databases (this repo includes Mongoose.js, Sequelize.js, and Redis) and other library such as Cron, RPC client and server for micro-service application development (currently not available).
 
-* Application version: 2.0.1
+### Boilerplate structure ###
 
-### How do I get set up? ###
+    .
+    ├─ build                   # Build scripts
+    ├─ logs                    # Express log files
+    ├─ public                  # Resource files
+    ├─ src                     # Source files
+    |   ├─ main                # Main application
+    |   |   |─ application     # Application core
+    |   |   |─ configs         # Application configurations
+    |   |   |─ database        # Database configuration and models/schema
+    |   |   |─ protocols       # Protocol-based interface to application core
+    |   |   └─ system          # Application server (express, etc.) configuration
+    |   └─ test                # Automated tests
+    |       |─ connection      # Connectivity testing
+    |       |─ unit-test       # Unit-test for each controller and service layer 
+    |       └─ web-api         # Integration test based on API's endpoints
+    ├─ LICENSE
+    └─ README.md
 
-* Install Node.js latest version
+### Development guidelines ###
+
+* Install Node.js latest version. See the official [download site of Node.js](https://nodejs.org/en/download/)
 
 * Clone this repository:
 
-    `git clone https://github.com/rakhmatullahyoga/Node-Service.git`
+    `git clone https://github.com/rakhmatullahyoga/express-start.git`
     
 * Install project dependencies:
+
+    - Install all required third party application (database and other tools) and make sure everything running properly
     
     - Install all dependencies defined in package.json:
     
@@ -22,49 +45,79 @@
     
 * Setup environment variables
 
-    This project uses [dotenv](https://www.npmjs.com/package/dotenv), please configure the proper environment variables before running this application.
+    **express-start** uses [dotenv](https://www.npmjs.com/package/dotenv), please configure the proper environment variables before running this application.
     
-    - Copy the `.sample-env` file and rename it to `.env`
+    - Copy the `.env.sample` file and rename it to `.env`
     - Edit all sample fields with the correct environment variables for the application server
     
 * Database migration (using [Sequelize](http://docs.sequelizejs.com)):
 
     - create model (and migration): `node node_modules/.bin/sequelize model:create --name <model_name> --attributes <attributes>`
-    - create migration: `node node_modules/.bin/sequelize migration:create`
-    - run: `node node_modules/.bin/sequelize db:migrate`
-    - undo: `node node_modules/.bin/sequelize db:migrate:undo`
+    - create migration: `node node_modules/.bin/sequelize migration:create --name <migration_name>`
+    - run migration: `node node_modules/.bin/sequelize db:migrate`
+    - undo migration: `node node_modules/.bin/sequelize db:migrate:undo`
     - help: `node node_modules/.bin/sequelize help`
 
-* How to run tests:
+* Code quality tools
 
-    `npm test`
+    **express-start** boilerplate is supported with [ESLint](https://www.npmjs.com/package/eslint) for javascript code lint.
+    Use this after you develop some application codes using this boilerplate by typing these commands:
+    
+    - To run ESLint, type: `node node_modules/.bin/eslint .`
+    - Fixing code errors, just type: `node node_modules/.bin/eslint . --fix`
+
+* Application testing
+
+    **express-start** use [Mocha](http://mochajs.org/) as the testing environment, and [Chai](http://chaijs.com/) as the assertion library.
+    **express-start** also provide code coverage using [Istanbul](https://www.npmjs.com/package/istanbul).
+    Code coverage report can be viewed in `coverage/lcov-report/index.html` after running test.
+    All test files should be located under the `src/tests` directory.
+    You can run testing by typing command: `npm test`
 
 ### Deployment guidelines ###
 
-* Deployment instructions (using Node.js local engine)
+#### Local deployment (for development) ####
 
-    `npm start` or `node index.js`
-    
-* Deployment instructions (using Docker engine)
+* Make sure all dependencies are installed and already running
 
-    `docker-compose --project-name "<service_name>" up --build -d`
+* Make sure you have run ESLint to check your application codes
+
+* Run `npm start` to start application
+
+#### Deployment using Docker (for staging and production) ####
+
+* Setup all docker-related environments (minimum: **docker** and **docker-compose**, see [the official Docker documentation](https://docs.docker.com/))
+
+* Run all scripts available in [build](build) directory
+
+    - `.env.sample` contains environment variables for docker-compose configuration
+    - `build.sh` contains script for build container
+    - `docker-compose.yml` contains configuration for all required containers and services
+    - `init-db.sh` contains script for running database migrations and seeds
+    - `test.sh` contains script for application testing
+    - `up.sh` contains script for running whole application containers
+
+* Note that `build.sh` script must be executed before any other script
+
+* Note that `init-db.sh` script must be executed before executing `test.sh` and/or `up.sh`
 
 ### Contribution guidelines ###
 
-* Writing tests:
+Please fork this repository to start making any contributions and make a pull request whenever you have finished your contribution.
+All contribution must be reviewed before merged to master branch.
 
-    This project use [Mocha](http://mochajs.org/) as the testing environment, and [Chai](http://chaijs.com/) as the assertion library.
-    This project also provide code coverage using [Istanbul](https://www.npmjs.com/package/istanbul).
-    Code coverage report can be viewed in `coverage/lcov-report/index.html` after running test.
-    All test files should be located under the `tests` directory.
+### Author ###
 
-* Writing code:
+* [Rakhmatullah Yoga Sutrisna](https://github.com/rakhmatullahyoga)
 
-    Please fork this repository first for starting a contribution. This project use ESLint as Javascript lint library.
-    
-    - To run ESlint, type `node node_modules/.bin/eslint .`
-    - Fixing code errors, just type `node node_modules/.bin/eslint . --fix`
+See also the list of [contributors](https://github.com/rakhmatullahyoga/express-start/graphs/contributors) who participated in this project.
 
-### Who do I talk to? ###
+### License ###
 
-&copy; [Rakhmatullah Yoga Sutrisna](https://github.com/rakhmatullahyoga/) 2017
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## Acknowledgments
+
+* Hat tip to [@atmaboy](https://github.com/atmaboy) who come up with the idea of build scripts.
+
+* [GITS Indonesia](https://github.com/gitsindonesia) for giving me opportunity to learn and develop this boilerplate, especially for work purposes.

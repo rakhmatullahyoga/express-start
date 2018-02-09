@@ -8,7 +8,6 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
     console.time('Loading express routers');
     let async = MODULES.ASYNC;
     let fs = MODULES.FS;
-    let http = MODULES.HTTP;
     let interfaces = TOOLS.INTERFACES.EXPRESS;
     let log = TOOLS.LOG;
     let multer = TOOLS.MULTER;
@@ -91,16 +90,12 @@ module.exports = function (TOOLS, APP, CONSTANTS, MODULES) {
                         if (stopData) {
                             let code = stopData.code ? (_.isNumber(stopData.code) ? stopData.code : 500) : 500;
                             return res.status(code).json({
-                                code: code,
-                                status: http.STATUS_CODES[code],
                                 message: stopData.message ? stopData.message : '',
                                 data: _.omit(stopData, ['code', 'message']) || {}
                             });
                         } else {
                             let code = data && data.code ? (_.isNumber(data.code) ? data.code : 200) : 200;
                             res.status(code).json({
-                                code: code,
-                                status: http.STATUS_CODES[code],
                                 message: data && data.message ? data.message : '',
                                 data: _.omit(data, ['code', 'message'])
                             });
