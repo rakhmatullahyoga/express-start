@@ -5,7 +5,8 @@
 'use strict';
 
 module.exports = function (TOOLS, MODULES, CONSTANTS) {
-    let welcomeController = TOOLS.CONTROLLERS.WelcomeController;
+    let welcomeController = TOOLS.CONTROLLERS['WelcomeController'];
+
     return {
         /**
          * Says hello

@@ -8,7 +8,7 @@ let should = chai.should();
 
 describe('Controller: WelcomeController', function () {
     before('load helpers', function (done) {
-        welcomeController = global.controllers.WelcomeController;
+        welcomeController = global.controllers['WelcomeController'];
         done();
     });
 

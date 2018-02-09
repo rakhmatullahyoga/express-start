@@ -8,7 +8,7 @@ let should = chai.should();
 
 describe('Service: WelcomeService', function () {
     before('load helpers', function (done) {
-        welcomeService = global.services.WelcomeService;
+        welcomeService = global.services['WelcomeService'];
         done();
     });
 
