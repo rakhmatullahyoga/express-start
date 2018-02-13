@@ -106,6 +106,8 @@ You can add or remove some third party plugin as necessary, such as databases (t
 
 * Setup all docker-related environments (minimum: **docker** and **docker-compose**, see [the official Docker documentation](https://docs.docker.com))
 
+* The [docker-compose.yml](build/docker-compose.yml) file is currently at version 3.3, so you should install the appropriated docker engine. Please refer to [this site](https://docs.docker.com/compose/compose-file/#compose-and-docker-compatibility-matrix) for compatibility matrix
+
 * Run all scripts available in [build](build) directory
 
     - `.env.sample` contains environment variables for docker-compose configuration
