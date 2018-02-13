@@ -14,7 +14,7 @@ describe('Service: WelcomeService', function () {
 
     describe('#welcome()', function () {
         it('should return a welcome message', function (done) {
-            welcomeService.welcome(null, function (err, result) {
+            welcomeService.welcome(function (err, result) {
                 should.not.exist(err);
                 should.exist(result);
                 result.should.be.an('object');

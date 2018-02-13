@@ -7,11 +7,10 @@
 module.exports = function (TOOLS, MODULES, CONSTANTS) {
     return {
         /**
-         * Get return data for testing
-         * @param params {Object} Any JSON Object
+         * Get welcome message
          * @param callback {Function} Callback function
          */
-        welcome: function (params, callback) {
+        welcome: function (callback) {
             callback(null, {message: 'Welcome!'});
         }
     };

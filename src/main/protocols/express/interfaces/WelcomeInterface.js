@@ -16,7 +16,7 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
          * @param next {Function} Callback function for next handler
          */
         welcome: function (previousData, req, res, next) {
-            welcomeController.welcome(null, function (err, result) {
+            welcomeController.welcome(function (err, result) {
                 next(err, result);
             });
         }

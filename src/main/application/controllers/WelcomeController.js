@@ -9,12 +9,11 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
 
     return {
         /**
-         * Get message as a data for response
-         * @param param {Object} An object that should contains
+         * Get welcome message
          * @param callback {Function} Callback function
          */
-        welcome: function (param, callback) {
-            welcomeService.welcome({}, callback);
+        welcome: function (callback) {
+            welcomeService.welcome(callback);
         }
     };
 };

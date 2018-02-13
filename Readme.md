@@ -11,11 +11,12 @@ You can add or remove some third party plugin as necessary, such as databases (t
 
     .
     ├─ build                   # Build scripts
+    ├─ coverage*               # Tests coverage report
     ├─ logs                    # Express log files
     ├─ public                  # Resource files
     ├─ src                     # Source files
     |   ├─ main                # Main application
-    |   |   |─ application     # Application core
+    |   |   |─ application     # Application core, consist of controllers and services
     |   |   |─ configs         # Application configurations
     |   |   |─ database        # Database configuration and models/schema
     |   |   |─ protocols       # Protocol-based interface to application core
@@ -24,17 +25,34 @@ You can add or remove some third party plugin as necessary, such as databases (t
     |       |─ connection      # Connectivity testing
     |       |─ unit-test       # Unit-test for each controller and service layer 
     |       └─ web-api         # Integration test based on API's endpoints
+    ├─ volumes*                # Docker containers volume
+    |   ├─ mysql*              # MySQL container volume
+    |   └─ redis*              # redis container volume
     ├─ LICENSE
     └─ README.md
+    
+    *generated directories
 
 ### Development guidelines ###
 
-* Install Node.js latest version. See the official [download site of Node.js](https://nodejs.org/en/download/)
+* Install Node.js latest version. See the official [download site of Node.js](https://nodejs.org/en/download)
 
 * Clone this repository:
 
     `git clone https://github.com/rakhmatullahyoga/express-start.git`
     
+* Specify minimum dependencies for application:
+
+    You can modify appropriate minimum dependencies by adding / removing unnecessary dependencies on these files:
+    
+    - [package.json](package.json): dependency installation
+    
+    - [src/main/configs/modules.js](src/main/configs/modules.js): application dependency declaration
+    
+    - [src/main/configs/tools.js](src/main/configs/tools.js): dependency initialization before running the main application.
+    
+    - [build/docker-compose.yml](build/docker-compose.yml): docker dependency
+
 * Install project dependencies:
 
     - Install all required third party application (database and other tools) and make sure everything running properly
@@ -68,7 +86,7 @@ You can add or remove some third party plugin as necessary, such as databases (t
 
 * Application testing
 
-    **express-start** use [Mocha](http://mochajs.org/) as the testing environment, and [Chai](http://chaijs.com/) as the assertion library.
+    **express-start** use [Mocha](http://mochajs.org) as the testing environment, and [Chai](http://chaijs.com) as the assertion library.
     **express-start** also provide code coverage using [Istanbul](https://www.npmjs.com/package/istanbul).
     Code coverage report can be viewed in `coverage/lcov-report/index.html` after running test.
     All test files should be located under the `src/tests` directory.
@@ -86,7 +104,7 @@ You can add or remove some third party plugin as necessary, such as databases (t
 
 #### Deployment using Docker (for staging and production) ####
 
-* Setup all docker-related environments (minimum: **docker** and **docker-compose**, see [the official Docker documentation](https://docs.docker.com/))
+* Setup all docker-related environments (minimum: **docker** and **docker-compose**, see [the official Docker documentation](https://docs.docker.com))
 
 * Run all scripts available in [build](build) directory
 
@@ -96,6 +114,10 @@ You can add or remove some third party plugin as necessary, such as databases (t
     - `init-db.sh` contains script for running database migrations and seeds
     - `test.sh` contains script for application testing
     - `up.sh` contains script for running whole application containers
+
+* Note that in `docker-compose.yml` file, user and password configuration can only be declared once, unless you clear mysql container and volumes by using `docker-compose down` command.
+
+* Note that in `docker-compose.yml` file, user configuration could not be specified to 'root' as this user is already declared by default
 
 * Note that `build.sh` script must be executed before any other script
 

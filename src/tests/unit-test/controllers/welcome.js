@@ -14,7 +14,7 @@ describe('Controller: WelcomeController', function () {
 
     describe('#welcome()', function () {
         it('should return a welcome message', function (done) {
-            welcomeController.welcome(null, function (err, result) {
+            welcomeController.welcome(function (err, result) {
                 should.not.exist(err);
                 should.exist(result);
                 result.should.be.an('object');
