@@ -140,7 +140,7 @@ See also the list of [contributors](https://github.com/rakhmatullahyoga/express-
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-## Acknowledgments
+### Acknowledgments ###
 
 * Hat tip to [@atmaboy](https://github.com/atmaboy) who come up with the idea of build scripts.
 
