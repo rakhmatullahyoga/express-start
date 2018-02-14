@@ -1,7 +1,3 @@
-/**
- * Created by rakhmatullahyoga on 22/09/17.
- */
-
 const chai = require('chai');
 let welcomeController;
 let should = chai.should();

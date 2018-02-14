@@ -33,9 +33,4 @@ describe('Express endpoints', function () {
             });
         });
     });
-
-    after('close application server', function (done) {
-        global.express_server.close();
-        done();
-    });
 });

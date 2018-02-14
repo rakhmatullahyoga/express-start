@@ -1,7 +1,3 @@
-/**
- * Created by rakhmatullahyoga on 21/09/17.
- */
-
 const chai = require('chai');
 let welcomeService;
 let should = chai.should();

@@ -24,7 +24,7 @@ You can add or remove some third party plugin as necessary, such as databases (t
     |   └─ tests               # Automated tests
     |       |─ connection      # Connectivity testing
     |       |─ unit-test       # Unit-test for each controller and service layer 
-    |       └─ web-api         # Integration test based on API's endpoints
+    |       └─ web-test        # Integration test based on API's endpoints
     ├─ volumes*                # Docker containers volume
     |   ├─ mysql*              # MySQL container volume
     |   └─ redis*              # redis container volume
