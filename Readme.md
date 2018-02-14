@@ -5,7 +5,7 @@
 This repository contains express-start project, a boilerplate for Node.js REST API application using Express.js as its main server for http protocol.
 You can use this repo as a template for REST API web service development.
 This boilerplate is already powered by docker for containerization and application deployment purposes.
-You can add or remove some third party plugin as necessary, such as databases (this repo includes Mongoose.js, Sequelize.js, and Redis) and other library such as Cron, RPC client and server for micro-service application development (currently not available).
+You can add or remove some third party plugin as necessary, such as databases (this repo includes [Mongoose.js](https://www.npmjs.com/package/mongoose), [Sequelize.js](https://www.npmjs.com/package/sequelize) with [MySQL](https://www.npmjs.com/package/mysql2), and [Redis](https://www.npmjs.com/package/redis)) and other library such as Cron, RPC client and server for micro-service application development (currently not available).
 
 ### Boilerplate structure ###
 
@@ -68,7 +68,7 @@ You can add or remove some third party plugin as necessary, such as databases (t
     - Copy the `.env.sample` file and rename it to `.env`
     - Edit all sample fields with the correct environment variables for the application server
     
-* Database migration (using [Sequelize](http://docs.sequelizejs.com)):
+* Database migration (using [Sequelize-cli](https://www.npmjs.com/package/sequelize-cli)):
 
     - create model (and migration): `node node_modules/.bin/sequelize model:create --name <model_name> --attributes <attributes>`
     - create migration: `node node_modules/.bin/sequelize migration:create --name <migration_name>`
